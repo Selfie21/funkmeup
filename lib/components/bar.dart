@@ -23,8 +23,8 @@ class Bar {
     paint.color = base;
   }
 
-  void setColor(String color){
-    switch (color){
+  void setColor(String color) {
+    switch (color) {
       case 'bad':
         this.paint.color = bad;
         break;

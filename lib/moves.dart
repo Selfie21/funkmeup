@@ -1,6 +1,1 @@
-enum Moves {
-  slideleft,
-  slidefront,
-  slideright,
-  spin
-}
+enum Moves { slideleft, slidefront, slideright, spin }

@@ -7,29 +7,25 @@ import 'package:flutter/services.dart';
 import 'package:funkmeup/dancegame.dart';
 
 void main() {
-
   DanceGame game = DanceGame();
-  
+
   TapGestureRecognizer tapper = TapGestureRecognizer();
-	tapper.onTapDown = game.onTapDown;
-	Util flameUtil = Util();
+  tapper.onTapDown = game.onTapDown;
+  Util flameUtil = Util();
   runApp(game.widget);
 
   Flame.images.loadAll(<String>[
-  	'slidefront.png',
-  	'slideleft.png',
-  	'slideright.png',
-  	'spin.png',
-		'start.png',
-		'quit.png',
-		'title.png'
-	]);
+    'slidefront.png',
+    'slideleft.png',
+    'slideright.png',
+    'spin.png',
+    'start.png',
+    'quit.png',
+    'title.png'
+  ]);
 
-	Flame.audio.disableLog();
-	Flame.audio.loadAll(<String>[
-		'intro.mp3',
-		'september.mp3'
-	]);
+  Flame.audio.disableLog();
+  Flame.audio.loadAll(<String>['intro.mp3', 'september.mp3']);
 
   flameUtil.fullScreen();
   flameUtil.setOrientation(DeviceOrientation.portraitUp);

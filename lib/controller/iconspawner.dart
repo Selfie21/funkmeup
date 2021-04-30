@@ -10,9 +10,9 @@ import 'package:funkmeup/components/bar.dart';
 
 class IconSpawner {
   final DanceGame game;
-  final TextConfig config = TextConfig(fontSize: 40, color:Color(0xff03dac6),
-      fontFamily: 'BebasNeue');
-  final moves = [0,1,2,3,0,1,1,1,1];
+  final TextConfig config = TextConfig(
+      fontSize: 40, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
+  final moves = [0, 1, 2, 3, 0, 1, 1, 1, 1];
   final timings = [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000];
 
   DetectionController detectionController;
@@ -28,7 +28,7 @@ class IconSpawner {
   List<int> timeForMoveToCheck;
   List<int> moveToCheck;
 
-  IconSpawner(this.game){
+  IconSpawner(this.game) {
     this.bar = game.bar;
     this.detectionController = game.detectionController;
     timeForMoveToCheck = [];
@@ -45,7 +45,7 @@ class IconSpawner {
     nextSpawn = DateTime.now().millisecondsSinceEpoch + timings[0];
   }
 
-  void render(Canvas c){
+  void render(Canvas c) {
     config.render(c, "Score: $score", textPosition);
   }
 
@@ -54,34 +54,33 @@ class IconSpawner {
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
     // Let Song run for 100 seconds
-    if(nowTimestamp - startTime > 100000){
+    if (nowTimestamp - startTime > 100000) {
       game.activeView = View.home;
       game.playIntroAudio();
     }
 
     // Add Timings for new Move to Check
-    if (!(currentMove >= moves.length-1) && nowTimestamp >= nextSpawn){
+    if (!(currentMove >= moves.length - 1) && nowTimestamp >= nextSpawn) {
       moveToCheck.add(moves[currentMove]);
       timeForMoveToCheck.add(nowTimestamp + 4000);
       game.spawnIcon(Moves.values[moves[currentMove]]);
-      nextSpawn = nowTimestamp + timings[currentMove+1];
+      nextSpawn = nowTimestamp + timings[currentMove + 1];
       currentMove += 1;
     }
 
     // Time Interval for Checking current Move
-    if (moveToCheck.isNotEmpty && nowTimestamp >= timeForMoveToCheck[0]){
-
+    if (moveToCheck.isNotEmpty && nowTimestamp >= timeForMoveToCheck[0]) {
       // new Move detected
-      if(thresholdForMove == 0){
+      if (thresholdForMove == 0) {
         thresholdForMove = nowTimestamp;
       }
 
       // User input was Correct
-      if(detectionController.update(t, Moves.values[moves[currentMove]])){
-        if((nowTimestamp - thresholdForMove - 1200).abs() < 50) {
+      if (detectionController.update(t, Moves.values[moves[currentMove]])) {
+        if ((nowTimestamp - thresholdForMove - 1200).abs() < 50) {
           bar.setColor('supreme');
           score += 5;
-        }else{
+        } else {
           bar.setColor('good');
           score += 1;
         }
@@ -92,7 +91,7 @@ class IconSpawner {
       }
 
       //Timeout for Current Move
-      if (nowTimestamp > (thresholdForMove+1400)){
+      if (nowTimestamp > (thresholdForMove + 1400)) {
         bar.setColor('bad');
         score -= 1;
         timeSinceChange = nowTimestamp;
@@ -103,7 +102,7 @@ class IconSpawner {
     }
 
     // Change bar to Base
-    if(nowTimestamp > (timeSinceChange+1000)){
+    if (nowTimestamp > (timeSinceChange + 1000)) {
       bar.setColor('base');
     }
   }

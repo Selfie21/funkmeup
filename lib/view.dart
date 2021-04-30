@@ -1,5 +1,1 @@
-enum View {
-  home,
-  playing,
-  finished
-}
+enum View { home, playing, finished }

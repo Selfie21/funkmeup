@@ -29,31 +29,29 @@ class DetectionController {
     return false;
   }
 
-
-  bool detectPostiveAxisMovement(double force, double threshold){
+  bool detectPostiveAxisMovement(double force, double threshold) {
     return force > threshold ? true : false;
   }
 
-  bool detectNegativeAxisMovement(double force, double threshold){
+  bool detectNegativeAxisMovement(double force, double threshold) {
     return force > threshold ? true : false;
   }
 
-  bool detectSpin(){
-    if(degreeTurned > 360){
+  bool detectSpin() {
+    if (degreeTurned > 360) {
       degreeTurned = 0;
       return true;
-    }else{
+    } else {
       return false;
     }
   }
 
-  void updateDegree(double degPerSec, double time){
+  void updateDegree(double degPerSec, double time) {
     degreeTurned += (degPerSec * time).toInt();
   }
 
-  void updateData(List<double> gyro, List<double> accel){
+  void updateData(List<double> gyro, List<double> accel) {
     this.gyro = gyro;
     this.accel = accel;
   }
-
 }

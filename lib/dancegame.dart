@@ -19,110 +19,106 @@ import 'package:funkmeup/controller/iconspawner.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/controller/bluetoothcontroller.dart';
 
+class DanceGame extends Game with TapDetector {
+  Size screenSize;
+  double tileSize;
+  bool hasWon = false;
+  List<Icon> icons;
+  Random rnd;
+  IconSpawner spawner;
+  Bar bar;
+  int score;
+  AudioPlayer introAudio;
+  AudioPlayer mainAudio;
 
-class DanceGame extends Game with TapDetector{
+  View activeView = View.home;
+  Title title;
+  HomeView homeView;
+  StartButton startbtn;
+  QuitButton quitbtn;
 
-	Size screenSize;
-	double tileSize;
-	bool hasWon = false;
-	List<Icon> icons;
-	Random rnd;
-	IconSpawner spawner;
-	Bar bar;
-	int score;
-	AudioPlayer introAudio;
-	AudioPlayer mainAudio;
+  DetectionController detectionController;
+  BluetoothController bluetoothController;
+  BluetoothStatus bluetoothStatus;
 
-	View activeView = View.home;
-	Title title;
-	HomeView homeView;
-	StartButton startbtn;
-	QuitButton quitbtn;
+  DanceGame() {
+    initialize();
+  }
 
-	DetectionController detectionController;
-	BluetoothController bluetoothController;
-	BluetoothStatus bluetoothStatus;
+  void initialize() async {
+    resize(await Flame.util.initialDimensions());
+    icons = [];
+    startbtn = StartButton(this);
+    quitbtn = QuitButton(this);
+    title = Title(this);
+    bar = Bar(this);
+    bluetoothStatus = BluetoothStatus(this);
 
-	DanceGame(){
-		initialize();
-	}
+    homeView = HomeView(this, startbtn, quitbtn, title, bluetoothStatus);
+    detectionController = DetectionController(this);
+    bluetoothController = BluetoothController(this);
+    spawner = IconSpawner(this);
+    mainAudio = await Flame.audio.loopLongAudio('september.mp3', volume: .25);
+    mainAudio.pause();
+    introAudio = await Flame.audio.loopLongAudio('intro.mp3', volume: .25);
+  }
 
+  void playMainAudio() {
+    introAudio.pause();
+    mainAudio.pause();
+    mainAudio.seek(Duration.zero);
+    mainAudio.resume();
+  }
 
-	void initialize() async{
-		resize(await Flame.util.initialDimensions());
-		icons = [];
-		startbtn = StartButton(this);
-		quitbtn = QuitButton(this);
-		title = Title(this);
-		bar = Bar(this);
-		bluetoothStatus = BluetoothStatus(this);
+  void playIntroAudio() {
+    mainAudio.pause();
+    introAudio.pause();
+    introAudio.seek(Duration.zero);
+    introAudio.resume();
+  }
 
-		homeView = HomeView(this, startbtn, quitbtn, title, bluetoothStatus);
-		detectionController = DetectionController(this);
-		bluetoothController = BluetoothController(this);
-		spawner = IconSpawner(this);
-		mainAudio = await Flame.audio.loopLongAudio('september.mp3', volume: .25);
-		mainAudio.pause();
-		introAudio = await Flame.audio.loopLongAudio('intro.mp3', volume: .25);
+  void resize(Size size) {
+    screenSize = size;
+    tileSize = screenSize.width / 9;
+  }
 
-
-	}
-
-	void playMainAudio(){
-		introAudio.pause();
-		mainAudio.pause();
-		mainAudio.seek(Duration.zero);
-		mainAudio.resume();
-	}
-
-	void playIntroAudio(){
-		mainAudio.pause();
-		introAudio.pause();
-		introAudio.seek(Duration.zero);
-		introAudio.resume();
-	}
-	
-	void resize(Size size) {
-  	screenSize = size;
-  	tileSize = screenSize.width/9;
-	}
-	
-	void spawnIcon(Moves move) {
-		double middle = (screenSize.width/2); 
-		Icon newIcon = Icon(this, middle - (tileSize*1.5), 0, move);
-  	icons.add(newIcon);
-	}
+  void spawnIcon(Moves move) {
+    double middle = (screenSize.width / 2);
+    Icon newIcon = Icon(this, middle - (tileSize * 1.5), 0, move);
+    icons.add(newIcon);
+  }
 
   void render(Canvas canvas) {
-		drawBackground(canvas);
-		icons.forEach((Icon icon) => icon.render(canvas));
-		if (activeView == View.home) homeView.render(canvas);
-		else if (activeView == View.playing) {
-			spawner.render(canvas);
-			bar.render(canvas);
-		}
-  }
-  
-  void update(double t){
-		if (activeView == View.playing) spawner.update(t);
-  	icons.forEach((Icon icon) => icon.update(t));
-		icons.removeWhere((Icon icon) => icon.isOffScreen);
+    drawBackground(canvas);
+    icons.forEach((Icon icon) => icon.render(canvas));
+    if (activeView == View.home)
+      homeView.render(canvas);
+    else if (activeView == View.playing) {
+      spawner.render(canvas);
+      bar.render(canvas);
+    }
   }
 
-  void drawBackground(Canvas canvas){
-		Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
-		Paint bgPaint = Paint();
-		bgPaint.color = Color(0xff222f3e);
-		canvas.drawRect(bgRect, bgPaint);
-	}
+  void update(double t) {
+    if (activeView == View.playing) spawner.update(t);
+    icons.forEach((Icon icon) => icon.update(t));
+    icons.removeWhere((Icon icon) => icon.isOffScreen);
+  }
 
-	void onTapDown(TapDownDetails d) {
-		if(startbtn.rect.contains(d.globalPosition)  && activeView == View.home) {
-			startbtn.onTapDown();
-		}
+  void drawBackground(Canvas canvas) {
+    Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
+    Paint bgPaint = Paint();
+    bgPaint.color = Color(0xff222f3e);
+    canvas.drawRect(bgRect, bgPaint);
+  }
 
-		if(quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {
-			quitbtn.onTapDown();
-		}
-	}
+  void onTapDown(TapDownDetails d) {
+    if (startbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+      startbtn.onTapDown();
+    }
+
+    if (quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+      quitbtn.onTapDown();
+    }
+  }
 }
