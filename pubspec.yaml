@@ -35,3 +35,9 @@ flutter:
     - assets/images/quit.png
     - assets/images/title.png
     - assets/audio/september.mp3
+
+
+  fonts:
+    - family: BebasNeue
+      fonts:
+        - asset: assets/fonts/BebasNeue.ttf

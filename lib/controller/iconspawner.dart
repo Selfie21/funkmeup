@@ -10,8 +10,8 @@ import 'package:funkmeup/components/bar.dart';
 
 class IconSpawner {
   final DanceGame game;
-  final TextConfig config = TextConfig(fontSize: 15, color:Color(0xff03dac6),
-      fontFamily: 'Arial');
+  final TextConfig config = TextConfig(fontSize: 40, color:Color(0xff03dac6),
+      fontFamily: 'BebasNeue');
   final moves = [0,1,2,3,0,1,1,1,1];
   final timings = [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000];
 

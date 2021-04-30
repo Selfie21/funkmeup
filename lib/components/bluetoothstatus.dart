@@ -7,15 +7,15 @@ import 'package:funkmeup/status.dart';
 
 class BluetoothStatus {
   final DanceGame game;
-  final TextConfig config = TextConfig(fontSize: 15,
+  final TextConfig config = TextConfig(fontSize: 20,
                             color:Color(0xff03dac6),
-                            fontFamily: 'Arial');
+                            fontFamily: 'BebasNeue');
   Position textPosition;
   Status deviceStatus;
 
 
   BluetoothStatus(this.game){
-    textPosition = Position(10, game.screenSize.height-20);
+    textPosition = Position(10, game.screenSize.height-30);
   }
 
   void setStatus(Status status){
