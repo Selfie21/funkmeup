@@ -9,14 +9,15 @@ import 'package:funkmeup/components/icon.dart';
 import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/view.dart';
 import 'package:funkmeup/views/home.dart';
-import 'package:funkmeup/views/finished.dart';
 import 'package:funkmeup/components/startbtn.dart';
 import 'package:funkmeup/components/calibratebtn.dart';
 import 'package:funkmeup/components/bar.dart';
 import 'package:funkmeup/components/title.dart';
+import 'package:funkmeup/components/bluetoothstatus.dart';
 import 'package:funkmeup/controller/iconspawner.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/controller/bluetoothcontroller.dart';
+
 
 class DanceGame extends Game {
 
@@ -33,12 +34,12 @@ class DanceGame extends Game {
 	View activeView = View.home;
 	Title title;
 	HomeView homeView;
-	FinishedView finishedView;
 	StartButton startbtn;
 	CalibrateButton calibratebtn;
 
 	DetectionController detectionController;
 	BluetoothController bluetoothController;
+	BluetoothStatus bluetoothStatus;
 
 	DanceGame(){
 		initialize();
@@ -47,14 +48,13 @@ class DanceGame extends Game {
 	void initialize() async{
 		resize(await Flame.util.initialDimensions());
 		icons = [];
-		rnd = Random();
 		startbtn = StartButton(this);
 		calibratebtn = CalibrateButton(this);
 		title = Title(this);
 		bar = Bar(this);
+		bluetoothStatus = BluetoothStatus(this);
 
-		homeView = HomeView(this, startbtn, calibratebtn, title);
-		finishedView = FinishedView(this);
+		homeView = HomeView(this, startbtn, calibratebtn, title, bluetoothStatus);
 		detectionController = DetectionController(this);
 		bluetoothController = BluetoothController(this);
 		spawner = IconSpawner(this);
@@ -86,7 +86,6 @@ class DanceGame extends Game {
 		icons.forEach((Icon icon) => icon.render(canvas));
 		if (activeView == View.home) homeView.render(canvas);
 		else if (activeView == View.playing) bar.render(canvas);
-		else if (activeView == View.finished) finishedView.render(canvas);
   }
   
   void update(double t){

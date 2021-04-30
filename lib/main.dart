@@ -23,8 +23,6 @@ void main() {
   	'slideright.png',
   	'spin.png',
 		'start.png',
-		'quit.png',
-		'help.png',
 		'calibrate.png',
 		'title.png'
 	]);

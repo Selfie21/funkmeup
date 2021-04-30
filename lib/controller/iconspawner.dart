@@ -1,5 +1,3 @@
-import 'package:flame/flame.dart';
-
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';

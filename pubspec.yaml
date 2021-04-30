@@ -30,8 +30,6 @@ flutter:
     - assets/images/slideright.png
     - assets/images/spin.png
     - assets/images/start.png
-    - assets/images/quit.png
-    - assets/images/help.png
     - assets/images/calibrate.png
     - assets/images/title.png
     - assets/audio/september.mp3

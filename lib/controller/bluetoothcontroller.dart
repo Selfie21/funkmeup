@@ -1,18 +1,17 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:esense_flutter/esense.dart';
 
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
+import 'package:funkmeup/status.dart';
 
 class BluetoothController {
 
   final DanceGame game;
   DetectionController detectionController;
 
-  bool connected = false;
   String eSenseName = 'Unkown';
-  String _deviceStatus = '';
+  Status _deviceStatus = Status.unknown;
   List<double> gyro = List<double>.filled(3, 0);
   List<double> accel = List<double>.filled(3, 0);
 
@@ -29,34 +28,35 @@ class BluetoothController {
       if(event.type == ConnectionType.connected) {
         Timer(Duration(seconds: 2), () async {
           _startListenToSensorEvents();
-          connected = true;
         });
       }
 
       switch (event.type) {
         case ConnectionType.connected:
-          _deviceStatus = 'connected';
+          _deviceStatus = Status.connected;
           break;
         case ConnectionType.unknown:
-          _deviceStatus = 'unknown';
+          _deviceStatus = Status.unknown;
           break;
         case ConnectionType.disconnected:
-          _deviceStatus = 'disconnected';
+          _deviceStatus = Status.disconnected;
           break;
         case ConnectionType.device_found:
-          _deviceStatus = 'device_found';
+          _deviceStatus = Status.devicefound;
           break;
         case ConnectionType.device_not_found:
-          _deviceStatus = 'device_not_found';
+          _deviceStatus = Status.devicenotfound;
           break;
       }
+
+      game.bluetoothStatus.setStatus(_deviceStatus);
     });
 
     Timer.periodic(Duration(seconds: 4), (timer) async {
       await ESenseManager.connect(eSenseName);
 
       await new Future.delayed(const Duration(seconds : 3));
-      if(_deviceStatus == 'device_found' || _deviceStatus == 'connected') {
+      if(_deviceStatus == Status.devicefound || _deviceStatus == Status.connected) {
         timer.cancel();
       }
     });
