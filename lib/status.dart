@@ -1,1 +1,8 @@
-enum Status { connected, unknown, disconnected, devicefound, devicenotfound }
+enum Status {
+  connected,
+  unknown,
+  disconnected,
+  devicefound,
+  devicenotfound,
+  nobluetooth
+}

@@ -24,7 +24,9 @@ class BluetoothStatus {
     if (deviceStatus == Status.connected ||
         deviceStatus == Status.devicefound) {
       config.render(c, "Device Found!", textPosition);
-    } else {
+    } else if(deviceStatus == Status.nobluetooth) {
+      config.render(c, "Bluetooth is required for this Game! Please enable it!", textPosition);
+    }else{
       config.render(c, "Searching for Device ...", textPosition);
     }
   }

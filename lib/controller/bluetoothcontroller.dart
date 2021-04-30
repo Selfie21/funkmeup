@@ -12,16 +12,31 @@ class BluetoothController {
 
   String eSenseName = 'Unkown';
   Status _deviceStatus = Status.unknown;
+  bool _connectionLock = false;
   List<double> gyro = List<double>.filled(3, 0);
   List<double> accel = List<double>.filled(3, 0);
 
   BluetoothController(this.game) {
     this.detectionController = game.detectionController;
-    _connectToESense();
+    Timer.periodic(Duration(seconds: 2), (timer) {
+      FlutterBlue.instance.state.listen((state) {
+        if (state == BluetoothState.off) {
+          game.bluetoothStatus.setStatus(Status.nobluetooth);
+        }else{
+          game.bluetoothStatus.setStatus(Status.unknown);
+          _connectToESense();
+          _connectionLock = true;
+          timer.cancel();
+        }
+      });
+    });
   }
-
-  //TODO: Prevent Crash when bluetooth is not turned on
+  
   Future<void> _connectToESense() async {
+    //prevent calling this method twice
+    if(_connectionLock){
+      return;
+    }
     ESenseManager.connectionEvents.listen((event) {
       print('CONNECTION event: $event');
       if (event.type == ConnectionType.connected) {
@@ -72,6 +87,6 @@ class BluetoothController {
   }
 
   void convertData(String dataString) {
-    //TODO: when getting headphones convert to accel and gyro array Maybe with Regex? Looks like the data will just be one long string
+    //TODO: have to wait for headphones to see how data looks like ... convert to accel and gyro array Maybe with Regex? Looks like the data will just be one long string
   }
 }
