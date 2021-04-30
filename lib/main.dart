@@ -21,7 +21,7 @@ void main() {
   	'slideright.png',
   	'spin.png',
 		'start.png',
-		'calibrate.png',
+		'choosesong.png',
 		'title.png'
 	]);
 

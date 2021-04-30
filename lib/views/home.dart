@@ -10,16 +10,16 @@ class HomeView {
 
   final DanceGame game;
   final StartButton startbtn;
-  final CalibrateButton calibratebtn;
+  final ChooseSongButton choosesongbtn;
   final Title title;
   final BluetoothStatus bluetoothStatus;
 
-  HomeView(this.game, this.startbtn, this.calibratebtn, this.title, this.bluetoothStatus);
+  HomeView(this.game, this.startbtn, this.choosesongbtn, this.title, this.bluetoothStatus);
 
   void render(Canvas c) {
     title.render(c);
     startbtn.render(c);
-    calibratebtn.render(c);
+    choosesongbtn.render(c);
     bluetoothStatus.render(c);
   }
 

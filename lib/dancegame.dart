@@ -36,7 +36,7 @@ class DanceGame extends Game with TapDetector{
 	Title title;
 	HomeView homeView;
 	StartButton startbtn;
-	CalibrateButton calibratebtn;
+	ChooseSongButton choosesongbtn;
 
 	DetectionController detectionController;
 	BluetoothController bluetoothController;
@@ -51,12 +51,12 @@ class DanceGame extends Game with TapDetector{
 		resize(await Flame.util.initialDimensions());
 		icons = [];
 		startbtn = StartButton(this);
-		calibratebtn = CalibrateButton(this);
+		choosesongbtn = ChooseSongButton(this);
 		title = Title(this);
 		bar = Bar(this);
 		bluetoothStatus = BluetoothStatus(this);
 
-		homeView = HomeView(this, startbtn, calibratebtn, title, bluetoothStatus);
+		homeView = HomeView(this, startbtn, choosesongbtn, title, bluetoothStatus);
 		detectionController = DetectionController(this);
 		bluetoothController = BluetoothController(this);
 		spawner = IconSpawner(this);
@@ -108,8 +108,8 @@ class DanceGame extends Game with TapDetector{
 			startbtn.onTapDown();
 		}
 
-		if(calibratebtn.rect.contains(d.globalPosition) && activeView == View.home) {
-			calibratebtn.onTapDown();
+		if(choosesongbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+			choosesongbtn.onTapDown();
 		}
 	}
 }
