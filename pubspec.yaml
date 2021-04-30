@@ -35,6 +35,7 @@ flutter:
     - assets/images/title.png
     - assets/audio/september.mp3
     - assets/audio/intro.mp3
+    - assets/audio/play.mp3
 
 
   fonts:

@@ -114,6 +114,7 @@ class DanceGame extends Game with TapDetector {
 
   void onTapDown(TapDownDetails d) {
     if (startbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+      Flame.audio.play('play.mp3');
       startbtn.onTapDown();
     }
 

@@ -25,7 +25,7 @@ void main() {
   ]);
 
   Flame.audio.disableLog();
-  Flame.audio.loadAll(<String>['intro.mp3', 'september.mp3']);
+  Flame.audio.loadAll(<String>['intro.mp3', 'september.mp3', 'play.mp3']);
 
   flameUtil.fullScreen();
   flameUtil.setOrientation(DeviceOrientation.portraitUp);

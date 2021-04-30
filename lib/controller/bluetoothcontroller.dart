@@ -31,7 +31,7 @@ class BluetoothController {
       });
     });
   }
-  
+
   Future<void> _connectToESense() async {
     //prevent calling this method twice
     if(_connectionLock){
