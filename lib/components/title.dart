@@ -10,10 +10,10 @@ class Title {
 
   Title(this.game) {
     rect = Rect.fromLTWH(
-      0,
-      (game.screenSize.height * .2) - (game.tileSize * 1.5),
-      game.tileSize * 10,
-      game.tileSize * 5,
+      -20,
+      (game.screenSize.height * .2) - (game.tileSize * 2),
+      game.tileSize * 11,
+      game.tileSize * 6,
     );
     sprite = Sprite('title.png');
   }

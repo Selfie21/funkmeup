@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'dart:math';
 import 'package:flame/game.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -19,7 +20,7 @@ import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/controller/bluetoothcontroller.dart';
 
 
-class DanceGame extends Game {
+class DanceGame extends Game with TapDetector{
 
 	Size screenSize;
 	double tileSize;
@@ -44,6 +45,7 @@ class DanceGame extends Game {
 	DanceGame(){
 		initialize();
 	}
+
 
 	void initialize() async{
 		resize(await Flame.util.initialDimensions());

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:esense_flutter/esense.dart';
 
 import 'package:funkmeup/dancegame.dart';
@@ -19,7 +20,7 @@ class BluetoothController {
     this.detectionController = game.detectionController;
     _connectToESense();
   }
-
+  //TODO: Prevent Crash when bluetooth is not turned on
   Future<void> _connectToESense() async {
 
     ESenseManager.connectionEvents.listen((event) {

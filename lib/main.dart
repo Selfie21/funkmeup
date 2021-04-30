@@ -13,10 +13,8 @@ void main() {
   TapGestureRecognizer tapper = TapGestureRecognizer();
 	tapper.onTapDown = game.onTapDown;
 	Util flameUtil = Util();
-  
   runApp(game.widget);
-	
-  flameUtil.addGestureRecognizer(tapper);
+
   Flame.images.loadAll(<String>[
   	'slidefront.png',
   	'slideleft.png',
