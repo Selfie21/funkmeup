@@ -30,7 +30,8 @@ class DanceGame extends Game with TapDetector{
 	IconSpawner spawner;
 	Bar bar;
 	int score;
-	AudioPlayer audioPlayer;
+	AudioPlayer introAudio;
+	AudioPlayer mainAudio;
 
 	View activeView = View.home;
 	Title title;
@@ -60,16 +61,25 @@ class DanceGame extends Game with TapDetector{
 		detectionController = DetectionController(this);
 		bluetoothController = BluetoothController(this);
 		spawner = IconSpawner(this);
+		mainAudio = await Flame.audio.loopLongAudio('september.mp3', volume: .25);
+		mainAudio.pause();
+		introAudio = await Flame.audio.loopLongAudio('intro.mp3', volume: .25);
 
-		audioPlayer = await Flame.audio.loopLongAudio('september.mp3', volume: .25);
-		audioPlayer.pause();
 
 	}
 
-	void playAudio() {
-		audioPlayer.pause();
-		audioPlayer.seek(Duration.zero);
-		audioPlayer.resume();
+	void playMainAudio(){
+		introAudio.pause();
+		mainAudio.pause();
+		mainAudio.seek(Duration.zero);
+		mainAudio.resume();
+	}
+
+	void playIntroAudio(){
+		mainAudio.pause();
+		introAudio.pause();
+		introAudio.seek(Duration.zero);
+		introAudio.resume();
 	}
 	
 	void resize(Size size) {

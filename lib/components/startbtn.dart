@@ -27,7 +27,7 @@ class StartButton {
 
   void onTapDown() {
     game.activeView = View.playing;
-    game.playAudio();
+    game.playMainAudio();
     game.spawner.start();
     game.score = 0;
   }

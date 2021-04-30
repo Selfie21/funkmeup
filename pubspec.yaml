@@ -15,7 +15,6 @@ dependencies:
   flutter_blue: ^0.7.3
   flame: ^0.29.4
   esense_flutter: ^0.2.0+2
-  google_fonts: 2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +34,7 @@ flutter:
     - assets/images/quit.png
     - assets/images/title.png
     - assets/audio/september.mp3
+    - assets/audio/intro.mp3
 
 
   fonts:

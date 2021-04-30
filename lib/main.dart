@@ -21,12 +21,13 @@ void main() {
   	'slideright.png',
   	'spin.png',
 		'start.png',
-		'choosesong.png',
+		'quit.png',
 		'title.png'
 	]);
 
 	Flame.audio.disableLog();
 	Flame.audio.loadAll(<String>[
+		'intro.mp3',
 		'september.mp3'
 	]);
 

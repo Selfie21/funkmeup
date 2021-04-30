@@ -56,7 +56,7 @@ class IconSpawner {
     // Let Song run for 100 seconds
     if(nowTimestamp - startTime > 100000){
       game.activeView = View.home;
-      game.audioPlayer.pause();
+      game.playIntroAudio();
     }
 
     // Add Timings for new Move to Check
