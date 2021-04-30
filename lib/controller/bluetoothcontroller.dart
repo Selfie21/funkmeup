@@ -72,7 +72,7 @@ class BluetoothController {
   }
 
   void convertData(String dataString) {
-    //TODO: when getting headphones convert to accel and gyro array Maybe with Regex?
+    //TODO: when getting headphones convert to accel and gyro array Maybe with Regex? Looks like the data will just be one long string
   }
 
 }

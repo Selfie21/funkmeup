@@ -11,7 +11,7 @@ import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/view.dart';
 import 'package:funkmeup/views/home.dart';
 import 'package:funkmeup/components/startbtn.dart';
-import 'package:funkmeup/components/calibratebtn.dart';
+import 'package:funkmeup/components/quitbtn.dart';
 import 'package:funkmeup/components/bar.dart';
 import 'package:funkmeup/components/title.dart';
 import 'package:funkmeup/components/bluetoothstatus.dart';
@@ -36,7 +36,7 @@ class DanceGame extends Game with TapDetector{
 	Title title;
 	HomeView homeView;
 	StartButton startbtn;
-	ChooseSongButton choosesongbtn;
+	QuitButton quitbtn;
 
 	DetectionController detectionController;
 	BluetoothController bluetoothController;
@@ -51,12 +51,12 @@ class DanceGame extends Game with TapDetector{
 		resize(await Flame.util.initialDimensions());
 		icons = [];
 		startbtn = StartButton(this);
-		choosesongbtn = ChooseSongButton(this);
+		quitbtn = QuitButton(this);
 		title = Title(this);
 		bar = Bar(this);
 		bluetoothStatus = BluetoothStatus(this);
 
-		homeView = HomeView(this, startbtn, choosesongbtn, title, bluetoothStatus);
+		homeView = HomeView(this, startbtn, quitbtn, title, bluetoothStatus);
 		detectionController = DetectionController(this);
 		bluetoothController = BluetoothController(this);
 		spawner = IconSpawner(this);
@@ -87,7 +87,10 @@ class DanceGame extends Game with TapDetector{
 		drawBackground(canvas);
 		icons.forEach((Icon icon) => icon.render(canvas));
 		if (activeView == View.home) homeView.render(canvas);
-		else if (activeView == View.playing) bar.render(canvas);
+		else if (activeView == View.playing) {
+			spawner.render(canvas);
+			bar.render(canvas);
+		}
   }
   
   void update(double t){
@@ -108,8 +111,8 @@ class DanceGame extends Game with TapDetector{
 			startbtn.onTapDown();
 		}
 
-		if(choosesongbtn.rect.contains(d.globalPosition) && activeView == View.home) {
-			choosesongbtn.onTapDown();
+		if(quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+			quitbtn.onTapDown();
 		}
 	}
 }

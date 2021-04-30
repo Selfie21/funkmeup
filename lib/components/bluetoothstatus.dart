@@ -9,7 +9,7 @@ class BluetoothStatus {
   final DanceGame game;
   final TextConfig config = TextConfig(fontSize: 15,
                             color:Color(0xff03dac6),
-                            fontFamily: 'Times New Roman');
+                            fontFamily: 'Arial');
   Position textPosition;
   Status deviceStatus;
 
