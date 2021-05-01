@@ -32,6 +32,7 @@ flutter:
     - assets/images/spin.png
     - assets/images/start.png
     - assets/images/quit.png
+    - assets/images/help.png
     - assets/images/title.png
     - assets/audio/september.mp3
     - assets/audio/intro.mp3

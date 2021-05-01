@@ -36,7 +36,8 @@ void main() {
     'spin.png',
     'start.png',
     'quit.png',
-    'title.png'
+    'title.png',
+    'help.png'
   ]);
 
   Flame.audio.disableLog();

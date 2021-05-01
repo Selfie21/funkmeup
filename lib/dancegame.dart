@@ -9,6 +9,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:funkmeup/components/icon.dart';
 import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/view.dart';
+import 'package:funkmeup/views/help.dart';
 import 'package:funkmeup/views/home.dart';
 import 'package:funkmeup/components/startbtn.dart';
 import 'package:funkmeup/components/quitbtn.dart';
@@ -18,6 +19,8 @@ import 'package:funkmeup/components/bluetoothstatus.dart';
 import 'package:funkmeup/controller/iconspawner.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/controller/bluetoothcontroller.dart';
+
+import 'components/helpbtn.dart';
 
 class DanceGame extends Game with TapDetector {
   Size screenSize;
@@ -34,8 +37,10 @@ class DanceGame extends Game with TapDetector {
   View activeView = View.home;
   Title title;
   HomeView homeView;
+  HelpView helpView;
   StartButton startbtn;
   QuitButton quitbtn;
+  HelpButton helpbtn;
 
   DetectionController detectionController;
   BluetoothController bluetoothController;
@@ -44,17 +49,19 @@ class DanceGame extends Game with TapDetector {
   DanceGame() {
     initialize();
   }
-  //TODO: Add Functionality to return to Home after Pressing Back Button
+
   void initialize() async {
     resize(await Flame.util.initialDimensions());
     icons = [];
     startbtn = StartButton(this);
     quitbtn = QuitButton(this);
+    helpbtn = HelpButton(this);
     title = Title(this);
     bar = Bar(this);
     bluetoothStatus = BluetoothStatus(this);
 
-    homeView = HomeView(this, startbtn, quitbtn, title, bluetoothStatus);
+    homeView = HomeView(this, startbtn, quitbtn, helpbtn, title, bluetoothStatus);
+    helpView = HelpView(this);
     detectionController = DetectionController(this);
     bluetoothController = BluetoothController(this);
     spawner = IconSpawner(this);
@@ -98,6 +105,8 @@ class DanceGame extends Game with TapDetector {
     icons.forEach((Icon icon) => icon.render(canvas));
     if (activeView == View.home)
       homeView.render(canvas);
+    else if(activeView == View.help)
+      helpView.render(canvas);
     else if (activeView == View.playing) {
       spawner.render(canvas);
       bar.render(canvas);
@@ -125,7 +134,14 @@ class DanceGame extends Game with TapDetector {
 
     if (quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {
       Flame.audio.play('play.mp3');
+      stopAudio();
       quitbtn.onTapDown();
     }
+
+    if (helpbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+      Flame.audio.play('play.mp3');
+      helpbtn.onTapDown();
+    }
+
   }
 }
