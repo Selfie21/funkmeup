@@ -77,6 +77,11 @@ class DanceGame extends Game with TapDetector {
     introAudio.resume();
   }
 
+  void stopAudio(){
+    mainAudio.stop();
+    introAudio.stop();
+  }
+
   void resize(Size size) {
     screenSize = size;
     tileSize = screenSize.width / 9;

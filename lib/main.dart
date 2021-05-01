@@ -6,13 +6,28 @@ import 'package:flutter/services.dart';
 
 import 'package:funkmeup/dancegame.dart';
 
+import 'controller/navigationcontroller.dart';
+
 void main() {
   DanceGame game = DanceGame();
 
   TapGestureRecognizer tapper = TapGestureRecognizer();
   tapper.onTapDown = game.onTapDown;
   Util flameUtil = Util();
-  runApp(game.widget);
+
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            game.widget,
+            new NavigationController(game)
+            ],
+        )
+      )
+    )
+  );
 
   Flame.images.loadAll(<String>[
     'slidefront.png',
