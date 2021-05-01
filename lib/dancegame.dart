@@ -1,24 +1,24 @@
-import 'dart:ui';
 import 'dart:math';
-import 'package:flame/game.dart';
+import 'dart:ui';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/flame.dart';
+import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
-import 'package:audioplayers/audioplayers.dart';
-
+import 'package:funkmeup/components/bar.dart';
+import 'package:funkmeup/components/bluetoothstatus.dart';
 import 'package:funkmeup/components/icon.dart';
+import 'package:funkmeup/components/quitbtn.dart';
+import 'package:funkmeup/components/startbtn.dart';
+import 'package:funkmeup/components/title.dart';
+import 'package:funkmeup/controller/bluetoothcontroller.dart';
+import 'package:funkmeup/controller/detectioncontroller.dart';
+import 'package:funkmeup/controller/iconspawner.dart';
 import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/view.dart';
 import 'package:funkmeup/views/help.dart';
 import 'package:funkmeup/views/home.dart';
-import 'package:funkmeup/components/startbtn.dart';
-import 'package:funkmeup/components/quitbtn.dart';
-import 'package:funkmeup/components/bar.dart';
-import 'package:funkmeup/components/title.dart';
-import 'package:funkmeup/components/bluetoothstatus.dart';
-import 'package:funkmeup/controller/iconspawner.dart';
-import 'package:funkmeup/controller/detectioncontroller.dart';
-import 'package:funkmeup/controller/bluetoothcontroller.dart';
 
 import 'components/helpbtn.dart';
 
@@ -60,7 +60,8 @@ class DanceGame extends Game with TapDetector {
     bar = Bar(this);
     bluetoothStatus = BluetoothStatus(this);
 
-    homeView = HomeView(this, startbtn, quitbtn, helpbtn, title, bluetoothStatus);
+    homeView =
+        HomeView(this, startbtn, quitbtn, helpbtn, title, bluetoothStatus);
     helpView = HelpView(this);
     detectionController = DetectionController(this);
     bluetoothController = BluetoothController(this);
@@ -84,7 +85,7 @@ class DanceGame extends Game with TapDetector {
     introAudio.resume();
   }
 
-  void stopAudio(){
+  void stopAudio() {
     mainAudio.stop();
     introAudio.stop();
   }
@@ -105,7 +106,7 @@ class DanceGame extends Game with TapDetector {
     icons.forEach((Icon icon) => icon.render(canvas));
     if (activeView == View.home)
       homeView.render(canvas);
-    else if(activeView == View.help)
+    else if (activeView == View.help)
       helpView.render(canvas);
     else if (activeView == View.playing) {
       spawner.render(canvas);
@@ -142,6 +143,5 @@ class DanceGame extends Game with TapDetector {
       Flame.audio.play('play.mp3');
       helpbtn.onTapDown();
     }
-
   }
 }

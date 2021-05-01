@@ -1,7 +1,8 @@
 import 'dart:ui';
+
 import 'package:flame/sprite.dart';
-import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/dancegame.dart';
+import 'package:funkmeup/moves.dart';
 
 class Icon {
   final DanceGame game;

@@ -2,19 +2,66 @@ import 'dart:ui';
 
 import 'package:flame/position.dart';
 import 'package:flame/text_config.dart';
+import 'package:funkmeup/components/bar.dart';
+import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/moves.dart';
 import 'package:funkmeup/view.dart';
-import 'package:funkmeup/controller/detectioncontroller.dart';
-import 'package:funkmeup/components/bar.dart';
 
 class IconSpawner {
   final DanceGame game;
   final TextConfig config = TextConfig(
       fontSize: 40, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
-  //TODO: Add Proper moves for September
-  final moves = [0, 1, 2, 3, 0, 1, 1, 1, 1];
-  final timings = [2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000];
+  final moves = [
+    0,
+    2,
+    0,
+    2,
+    1,
+    1,
+    3,
+    0,
+    0,
+    2,
+    2,
+    0,
+    2,
+    0,
+    2,
+    0,
+    3,
+    2,
+    3,
+    3,
+    3,
+    3,
+    2
+  ];
+  final timings = [
+    0,
+    2000,
+    3340,
+    2000,
+    4000,
+    1800,
+    1600,
+    1400,
+    1400,
+    1400,
+    1400,
+    6000,
+    1400,
+    1400,
+    1400,
+    4000,
+    2000,
+    2000,
+    2000,
+    7000,
+    4000,
+    99999
+  ];
+  final int playTime = 60000;
 
   DetectionController detectionController;
   Bar bar;
@@ -54,8 +101,8 @@ class IconSpawner {
   void update(double t) {
     int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
 
-    // Let Song run for 100 seconds
-    if (nowTimestamp - startTime > 100000) {
+    // Let Song run for 60 seconds
+    if (nowTimestamp - startTime > playTime) {
       game.activeView = View.home;
       game.playIntroAudio();
     }

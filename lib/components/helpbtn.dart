@@ -1,6 +1,6 @@
 import 'dart:ui';
-import 'package:flame/sprite.dart';
 
+import 'package:flame/sprite.dart';
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/view.dart';
 

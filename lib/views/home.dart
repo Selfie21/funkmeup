@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:funkmeup/components/helpbtn.dart';
-import 'package:funkmeup/dancegame.dart';
-import 'package:funkmeup/components/startbtn.dart';
-import 'package:funkmeup/components/quitbtn.dart';
-import 'package:funkmeup/components/title.dart';
 import 'package:funkmeup/components/bluetoothstatus.dart';
+import 'package:funkmeup/components/helpbtn.dart';
+import 'package:funkmeup/components/quitbtn.dart';
+import 'package:funkmeup/components/startbtn.dart';
+import 'package:funkmeup/components/title.dart';
+import 'package:funkmeup/dancegame.dart';
 
 class HomeView {
   final DanceGame game;
@@ -15,8 +15,8 @@ class HomeView {
   final Title title;
   final BluetoothStatus bluetoothStatus;
 
-  HomeView(
-      this.game, this.startbtn, this.quitbtn, this.helpbtn, this.title, this.bluetoothStatus);
+  HomeView(this.game, this.startbtn, this.quitbtn, this.helpbtn, this.title,
+      this.bluetoothStatus);
 
   void render(Canvas c) {
     title.render(c);

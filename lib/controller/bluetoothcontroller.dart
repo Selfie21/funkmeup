@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter_blue/flutter_blue.dart';
-import 'package:esense_flutter/esense.dart';
 
-import 'package:funkmeup/dancegame.dart';
+import 'package:esense_flutter/esense.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
+import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/status.dart';
 
 class BluetoothController {
@@ -22,7 +22,7 @@ class BluetoothController {
       FlutterBlue.instance.state.listen((state) {
         if (state == BluetoothState.off) {
           game.bluetoothStatus.setStatus(Status.nobluetooth);
-        }else{
+        } else {
           game.bluetoothStatus.setStatus(Status.unknown);
           _connectToESense();
           _connectionLock = true;
@@ -34,7 +34,7 @@ class BluetoothController {
 
   Future<void> _connectToESense() async {
     //prevent calling this method twice
-    if(_connectionLock){
+    if (_connectionLock) {
       return;
     }
     ESenseManager.connectionEvents.listen((event) {

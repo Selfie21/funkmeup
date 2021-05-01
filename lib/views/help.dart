@@ -1,7 +1,7 @@
 import 'dart:ui';
+
 import 'package:flame/position.dart';
 import 'package:flame/text_config.dart';
-
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/status.dart';
 

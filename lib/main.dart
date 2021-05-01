@@ -1,9 +1,8 @@
-import 'package:flame/util.dart';
 import 'package:flame/flame.dart';
-import 'package:flutter/material.dart';
+import 'package:flame/util.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:funkmeup/dancegame.dart';
 
 import 'controller/navigationcontroller.dart';
@@ -15,19 +14,13 @@ void main() {
   tapper.onTapDown = game.onTapDown;
   Util flameUtil = Util();
 
-  runApp(
-    MaterialApp(
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Stack(
-          fit: StackFit.expand,
-          children: [
-            game.widget,
-            new NavigationController(game)
-            ],
-        )
-      )
-    )
-  );
+          body: Stack(
+        fit: StackFit.expand,
+        children: [game.widget, new NavigationController(game)],
+      ))));
 
   Flame.images.loadAll(<String>[
     'slidefront.png',
