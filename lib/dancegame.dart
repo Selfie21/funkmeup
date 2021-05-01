@@ -44,7 +44,7 @@ class DanceGame extends Game with TapDetector {
   DanceGame() {
     initialize();
   }
-
+  //TODO: Add Functionality to return to Home after Pressing Back Button
   void initialize() async {
     resize(await Flame.util.initialDimensions());
     icons = [];
@@ -119,6 +119,7 @@ class DanceGame extends Game with TapDetector {
     }
 
     if (quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {
+      Flame.audio.play('play.mp3');
       quitbtn.onTapDown();
     }
   }
