@@ -1,6 +1,7 @@
 /assets/audio
 
 # Miscellaneous
+*.pptx
 *.class
 *.lock
 *.log

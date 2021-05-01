@@ -12,7 +12,7 @@ class HelpView {
       color: Color(0xff03dac6),
       fontFamily: 'BebasNeue',
       textAlign: TextAlign.left);
-  //TODO: automatic text align
+
   final String supportText =
       'Welcome to Funk Me UP!\n \nIn this game you will have to \n'
       'perform dance moves when they hit \nthe bar at the bottom.\n \n'
