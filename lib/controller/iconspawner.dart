@@ -12,55 +12,9 @@ class IconSpawner {
   final DanceGame game;
   final TextConfig config = TextConfig(
       fontSize: 40, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
-  final moves = [
-    0,
-    2,
-    0,
-    2,
-    1,
-    1,
-    3,
-    0,
-    0,
-    2,
-    2,
-    0,
-    2,
-    0,
-    2,
-    0,
-    3,
-    2,
-    3,
-    3,
-    3,
-    3,
-    2
-  ];
-  final timings = [
-    0,
-    2000,
-    3340,
-    2000,
-    4000,
-    1800,
-    1600,
-    1400,
-    1400,
-    1400,
-    1400,
-    6000,
-    1400,
-    1400,
-    1400,
-    4000,
-    2000,
-    2000,
-    2000,
-    7000,
-    4000,
-    99999
-  ];
+  final moves = [0,2,0,2,1,1,3,0,0,2,2,0,2,0,2,0,3,2,3,3,3,3,2];
+  final timings = [0,2000,3340,2000,4000,1800,1600,1400,1400,1400,1400,6000,
+    1400,1400,1400,4000,2000,2000,2000,7000,4000,99999];
   final int playTime = 60000;
 
   DetectionController detectionController;
