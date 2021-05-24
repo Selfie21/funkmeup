@@ -86,7 +86,7 @@ class IconSpawner {
           bar.setColor('good');
           score += 1;
         }
-        thresholdForMove = 0;
+        thresholdForMove = nowTimestamp;
         timeSinceChange = nowTimestamp;
         moveToCheck.removeAt(0);
         timeForMoveToCheck.removeAt(0);

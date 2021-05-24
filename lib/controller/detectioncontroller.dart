@@ -17,41 +17,27 @@ class DetectionController {
   bool update(double t, Moves move) {
     switch (move) {
       case Moves.slideleft:
-        return detectNegativeAxisMovement(0, 30);
+        return detectNegativeAxisMovement(getAverageFromQueue(accelZQueue), -2000);
         break;
       case Moves.slidefront:
-        return detectPostiveAxisMovement(0, 30);
+        return detectPostiveAxisMovement(getAverageFromQueue(accelZQueue), 2000);
         break;
       case Moves.slideright:
-        return detectPostiveAxisMovement(0, 30);
+        return detectPostiveAxisMovement(getAverageFromQueue(accelXQueue), 2000);
         break;
       case Moves.spin:
-        updateDegree(1, t);
-        return detectSpin();
+        detectNegativeAxisMovement(getAverageFromQueue(gyroYQueue), -4000);
         break;
     }
     return false;
   }
 
-  bool detectPostiveAxisMovement(double force, double threshold) {
+  bool detectPostiveAxisMovement(int force, int threshold) {
     return force > threshold ? true : false;
   }
 
-  bool detectNegativeAxisMovement(double force, double threshold) {
+  bool detectNegativeAxisMovement(int force, int threshold) {
     return force < threshold ? true : false;
-  }
-
-  bool detectSpin() {
-    if (degreeTurned > 360) {
-      degreeTurned = 0;
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  void updateDegree(double degPerSec, double time) {
-    degreeTurned += (degPerSec * time).toInt();
   }
 
   void updateData(int gyroY, List<int> accel) {
