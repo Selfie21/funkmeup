@@ -1,11 +1,15 @@
+import 'dart:collection';
+
 import 'package:funkmeup/dancegame.dart';
 import 'package:funkmeup/moves.dart';
 
 class DetectionController {
   final DanceGame game;
 
-  List<double> accel = List<double>.filled(3, 0);
-  List<double> gyro = List<double>.filled(3, 0);
+  Queue<int> accelXQueue = Queue<int>();
+  Queue<int> accelZQueue = Queue<int>();
+  Queue<int> gyroYQueue = Queue<int>();
+  final int amountValuesOverAverage = 3;
   int degreeTurned = 0;
 
   DetectionController(this.game);
@@ -34,7 +38,7 @@ class DetectionController {
   }
 
   bool detectNegativeAxisMovement(double force, double threshold) {
-    return force > threshold ? true : false;
+    return force < threshold ? true : false;
   }
 
   bool detectSpin() {
@@ -50,8 +54,29 @@ class DetectionController {
     degreeTurned += (degPerSec * time).toInt();
   }
 
-  void updateData(List<double> gyro, List<double> accel) {
-    this.gyro = gyro;
-    this.accel = accel;
+  void updateData(int gyroY, List<int> accel) {
+    insertToQueue(gyroYQueue, gyroY);
+    insertToQueue(accelXQueue, accel[0]);
+    insertToQueue(accelZQueue, accel[2]);
+
+    int avgX = getAverageFromQueue(accelXQueue);
+    int avgZ = getAverageFromQueue(accelZQueue);
+    int avgGyro = getAverageFromQueue(gyroYQueue);
+    print("avgX: $avgX    $avgZ    $avgGyro");
+  }
+
+  void insertToQueue(Queue<int> tmpQueue, int value){
+    if(tmpQueue.length > amountValuesOverAverage){
+      tmpQueue.removeLast();
+    }
+    tmpQueue.addFirst(value);
+  }
+
+  int getAverageFromQueue(Queue<int> tmpQueue){
+    int avg = 0;
+    for(var accelerationData in tmpQueue){
+      avg += accelerationData;
+    }
+    return avg~/tmpQueue.length;
   }
 }

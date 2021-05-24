@@ -10,11 +10,14 @@ class BluetoothController {
   final DanceGame game;
   DetectionController detectionController;
 
-  String eSenseName = 'Unkown';
+  String eSenseName = 'eSense-0176';
   Status _deviceStatus = Status.unknown;
   bool _connectionLock = false;
-  List<double> gyro = List<double>.filled(3, 0);
-  List<double> accel = List<double>.filled(3, 0);
+
+  List<int> accel = List<int>.filled(3, 0);
+  List<double> gravity = List<double>.filled(3, 0);
+  final double alpha = 0.8;
+  int gyroY = 0;
 
   BluetoothController(this.game) {
     this.detectionController = game.detectionController;
@@ -81,12 +84,17 @@ class BluetoothController {
 
   void _startListenToSensorEvents() async {
     subscription = ESenseManager.sensorEvents.listen((event) {
-      convertData(event.toString());
-      detectionController.updateData(gyro, accel);
-    });
-  }
+      gravity[0] = alpha * gravity[0] + (1 - alpha) * event.accel[0];
+      gravity[1] = alpha * gravity[1] + (1 - alpha) * event.accel[1];
+      gravity[2] = alpha * gravity[2] + (1 - alpha) * event.accel[2];
 
-  void convertData(String dataString) {
-    //TODO: have to wait for headphones to see how data looks like ... convert to accel and gyro array Maybe with Regex? Looks like the data will just be one long string
+      // Remove the gravity contribution with the high-pass filter.
+      accel[0] = (event.accel[0] - gravity[0]).toInt();
+      accel[1] = (event.accel[1] - gravity[1]).toInt();
+      accel[2] = (event.accel[2] - gravity[2]).toInt();
+
+      gyroY = event.gyro[1];
+      detectionController.updateData(gyroY, accel);
+    });
   }
 }
