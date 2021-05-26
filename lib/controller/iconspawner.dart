@@ -62,13 +62,13 @@ class IconSpawner {
     }
 
     // Correct Move Detected in Time Frame
-    if(nowTimestamp >= timingMoveToCheck.first &&
+    if(timingMoveToCheck.isNotEmpty && nowTimestamp >= timingMoveToCheck.first &&
         detectionController.update(t, Moves.values[categoryMoveToCheck.first])){
       correctMoveRoutine();
     }
 
     // Timout after Checking Move
-    if(nowTimestamp >= (timingMoveToCheck.first + TIMEDELAY_AFTER_TIMEOUT)){
+    if(timingMoveToCheck.isNotEmpty && nowTimestamp >= (timingMoveToCheck.first + TIMEDELAY_AFTER_TIMEOUT)){
       timeoutRoutine();
     }
 
