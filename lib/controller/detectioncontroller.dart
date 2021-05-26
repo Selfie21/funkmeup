@@ -63,6 +63,10 @@ class DetectionController {
     for(var accelerationData in tmpQueue){
       avg += accelerationData;
     }
-    return avg~/tmpQueue.length;
+    if(tmpQueue.length == 0){
+      return 0;
+    }else{
+      return avg~/tmpQueue.length;
+    }
   }
 }

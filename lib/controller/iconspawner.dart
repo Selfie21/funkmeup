@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:ui';
 
 import 'package:flame/position.dart';
@@ -15,97 +16,92 @@ class IconSpawner {
   final moves = [0,2,0,2,1,1,3,0,0,2,2,0,2,0,2,0,3,2,3,3,3,3,2];
   final timings = [0,2000,3340,2000,4000,1800,1600,1400,1400,1400,1400,6000,
     1400,1400,1400,4000,2000,2000,2000,7000,4000,99999];
-  final int playTime = 60000;
+  static const int PLAY_TIME = 60000;
+  static const int TIMEDELAY_AFTER_CHECKING_MOVES = 4000;
+  static const int TIMEDELAY_AFTER_GOODMOVE = 1200;
+  static const int TIMEDELAY_AFTER_TIMEOUT = 1400;
 
   DetectionController detectionController;
   Bar bar;
   Position textPosition;
-  int nextSpawn;
-  int currentMove;
 
   int score = 0;
+  int currentMoveIndex = 0;
   int startTime = 0;
-  int thresholdForMove = 0;
-  int timeSinceChange = 0;
-  List<int> timeForMoveToCheck;
-  List<int> moveToCheck;
+  int nowTimestamp = 0;
+  int nextSpawnTime = 0;
+
+  Queue<int> categoryMoveToCheck = Queue<int>();
+  Queue<int> timingMoveToCheck = Queue<int>();
 
   IconSpawner(this.game) {
     this.bar = game.bar;
     this.detectionController = game.detectionController;
-    timeForMoveToCheck = [];
-    moveToCheck = [];
     textPosition = Position(10, 10);
   }
 
   void start() {
     score = 0;
-    currentMove = 0;
-    timeForMoveToCheck = [];
-    moveToCheck = [];
+    currentMoveIndex = 0;
     startTime = DateTime.now().millisecondsSinceEpoch;
-    nextSpawn = DateTime.now().millisecondsSinceEpoch + timings[0];
+    nextSpawnTime = startTime + timings[currentMoveIndex];
   }
 
   void render(Canvas c) {
     config.render(c, "Score: $score", textPosition);
   }
 
-  //Refactor whatever this even is
   void update(double t) {
-    int nowTimestamp = DateTime.now().millisecondsSinceEpoch;
+    nowTimestamp = DateTime.now().millisecondsSinceEpoch;
+
+    // Spawn Icons
+    if(nowTimestamp >= nextSpawnTime){
+      game.spawnIcon(Moves.values[moves[currentMoveIndex]]);
+      addNextMove();
+    }
+
+    // Correct Move Detected in Time Frame
+    if(nowTimestamp >= timingMoveToCheck.first &&
+        detectionController.update(t, Moves.values[categoryMoveToCheck.first])){
+      correctMoveRoutine();
+    }
+
+    // Timout after Checking Move
+    if(nowTimestamp >= (timingMoveToCheck.first + 1400)){
+      timeoutRoutine();
+    }
 
     // Let Song run for 60 seconds
-    if (nowTimestamp - startTime > playTime) {
+    if(nowTimestamp - startTime > PLAY_TIME){
       game.activeView = View.home;
       game.playIntroAudio();
     }
+  }
 
-    // Add Timings for new Move to Check
-    if (!(currentMove >= moves.length - 1) && nowTimestamp >= nextSpawn) {
-      moveToCheck.add(moves[currentMove]);
-      timeForMoveToCheck.add(nowTimestamp + 4000);
-      game.spawnIcon(Moves.values[moves[currentMove]]);
-      nextSpawn = nowTimestamp + timings[currentMove + 1];
-      currentMove += 1;
+  void addNextMove(){
+    categoryMoveToCheck.addLast(moves[currentMoveIndex]);
+    timingMoveToCheck.addLast(nowTimestamp + TIMEDELAY_AFTER_CHECKING_MOVES);
+    currentMoveIndex += 1;
+    nextSpawnTime = nowTimestamp + timings[currentMoveIndex];
+  }
+
+  void correctMoveRoutine(){
+    int thresholdGoodMove = nowTimestamp - timingMoveToCheck.first - TIMEDELAY_AFTER_GOODMOVE;
+    if (thresholdGoodMove.abs() < 50) {
+      bar.setColor('supreme');
+      score += 5;
+    } else {
+      bar.setColor('good');
+      score += 1;
     }
+    categoryMoveToCheck.removeFirst();
+    timingMoveToCheck.removeFirst();
+  }
 
-    // Time Interval for Checking current Move
-    if (moveToCheck.isNotEmpty && nowTimestamp >= timeForMoveToCheck[0]) {
-      // new Move detected
-      if (thresholdForMove == 0) {
-        thresholdForMove = nowTimestamp;
-      }
-
-      // User input was Correct
-      if (detectionController.update(t, Moves.values[moves[currentMove]])) {
-        if ((nowTimestamp - thresholdForMove - 1200).abs() < 50) {
-          bar.setColor('supreme');
-          score += 5;
-        } else {
-          bar.setColor('good');
-          score += 1;
-        }
-        thresholdForMove = nowTimestamp;
-        timeSinceChange = nowTimestamp;
-        moveToCheck.removeAt(0);
-        timeForMoveToCheck.removeAt(0);
-      }
-
-      //Timeout for Current Move
-      if (nowTimestamp > (thresholdForMove + 1400)) {
-        bar.setColor('bad');
-        score -= 1;
-        timeSinceChange = nowTimestamp;
-        thresholdForMove = 0;
-        moveToCheck.removeAt(0);
-        timeForMoveToCheck.removeAt(0);
-      }
-    }
-
-    // Change bar to Base
-    if (nowTimestamp > (timeSinceChange + 1000)) {
-      bar.setColor('base');
-    }
+  void timeoutRoutine(){
+    bar.setColor('bad');
+    score -= 1;
+    categoryMoveToCheck.removeFirst();
+    timingMoveToCheck.removeFirst();
   }
 }
