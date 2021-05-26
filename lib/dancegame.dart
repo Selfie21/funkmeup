@@ -16,6 +16,7 @@ import 'package:funkmeup/controller/bluetoothcontroller.dart';
 import 'package:funkmeup/controller/detectioncontroller.dart';
 import 'package:funkmeup/controller/iconspawner.dart';
 import 'package:funkmeup/moves.dart';
+import 'package:funkmeup/status.dart';
 import 'package:funkmeup/view.dart';
 import 'package:funkmeup/views/help.dart';
 import 'package:funkmeup/views/home.dart';
@@ -129,9 +130,10 @@ class DanceGame extends Game with TapDetector {
 
   void onTapDown(TapDownDetails d) {
     if (startbtn.rect.contains(d.globalPosition) && activeView == View.home) {
-      // TODO: Make button not clickable if no headphones connected
-      Flame.audio.play('play.mp3');
-      startbtn.onTapDown();
+      if(bluetoothController.getDeviceStatus() == Status.connected){
+        Flame.audio.play('play.mp3');
+        startbtn.onTapDown();
+      }
     }
 
     if (quitbtn.rect.contains(d.globalPosition) && activeView == View.home) {

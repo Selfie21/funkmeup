@@ -9,8 +9,7 @@ class DetectionController {
   Queue<int> accelXQueue = Queue<int>();
   Queue<int> accelZQueue = Queue<int>();
   Queue<int> gyroYQueue = Queue<int>();
-  final int amountValuesOverAverage = 3;
-  int degreeTurned = 0;
+  static const int VALUES_TO_TAKE_AVERAGE_OVER = 4;
 
   DetectionController(this.game);
 
@@ -52,7 +51,7 @@ class DetectionController {
   }
 
   void insertToQueue(Queue<int> tmpQueue, int value){
-    if(tmpQueue.length > amountValuesOverAverage){
+    if(tmpQueue.length > VALUES_TO_TAKE_AVERAGE_OVER){
       tmpQueue.removeLast();
     }
     tmpQueue.addFirst(value);

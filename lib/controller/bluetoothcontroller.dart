@@ -9,15 +9,15 @@ import 'package:funkmeup/status.dart';
 class BluetoothController {
   final DanceGame game;
   DetectionController detectionController;
-
   String eSenseName = 'eSense-0176';
   Status _deviceStatus = Status.unknown;
   bool _connectionLock = false;
 
   List<int> accel = List<int>.filled(3, 0);
   List<double> gravity = List<double>.filled(3, 0);
-  final double alpha = 0.8;
   int gyroY = 0;
+  static const double ALPHA = 0.8;
+
 
   BluetoothController(this.game) {
     this.detectionController = game.detectionController;
@@ -84,9 +84,9 @@ class BluetoothController {
 
   void _startListenToSensorEvents() async {
     subscription = ESenseManager.sensorEvents.listen((event) {
-      gravity[0] = alpha * gravity[0] + (1 - alpha) * event.accel[0];
-      gravity[1] = alpha * gravity[1] + (1 - alpha) * event.accel[1];
-      gravity[2] = alpha * gravity[2] + (1 - alpha) * event.accel[2];
+      gravity[0] = ALPHA * gravity[0] + (1 - ALPHA) * event.accel[0];
+      gravity[1] = ALPHA * gravity[1] + (1 - ALPHA) * event.accel[1];
+      gravity[2] = ALPHA * gravity[2] + (1 - ALPHA) * event.accel[2];
 
       // Remove the gravity contribution with the high-pass filter.
       accel[0] = (event.accel[0] - gravity[0]).toInt();
@@ -96,5 +96,9 @@ class BluetoothController {
       gyroY = event.gyro[1];
       detectionController.updateData(gyroY, accel);
     });
+  }
+
+  Status getDeviceStatus(){
+    return _deviceStatus;
   }
 }

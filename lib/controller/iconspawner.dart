@@ -20,6 +20,7 @@ class IconSpawner {
   static const int TIMEDELAY_AFTER_CHECKING_MOVES = 4000;
   static const int TIMEDELAY_AFTER_GOODMOVE = 1200;
   static const int TIMEDELAY_AFTER_TIMEOUT = 1400;
+  static const int THRESHOLD_SUPREME_MOVE = 70;
 
   DetectionController detectionController;
   Bar bar;
@@ -67,7 +68,7 @@ class IconSpawner {
     }
 
     // Timout after Checking Move
-    if(nowTimestamp >= (timingMoveToCheck.first + 1400)){
+    if(nowTimestamp >= (timingMoveToCheck.first + TIMEDELAY_AFTER_TIMEOUT)){
       timeoutRoutine();
     }
 
@@ -87,7 +88,7 @@ class IconSpawner {
 
   void correctMoveRoutine(){
     int thresholdGoodMove = nowTimestamp - timingMoveToCheck.first - TIMEDELAY_AFTER_GOODMOVE;
-    if (thresholdGoodMove.abs() < 50) {
+    if (thresholdGoodMove.abs() < THRESHOLD_SUPREME_MOVE) {
       bar.setColor('supreme');
       score += 5;
     } else {
