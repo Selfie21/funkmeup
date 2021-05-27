@@ -7,8 +7,8 @@ import 'package:funkmeup/status.dart';
 
 class BluetoothStatus {
   final DanceGame game;
-  final TextConfig config = TextConfig(
-      fontSize: 20, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
+  TextConfig config = TextConfig(
+      fontSize: 25, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
   Position textPosition;
   Status deviceStatus;
 
@@ -23,10 +23,11 @@ class BluetoothStatus {
   void render(Canvas c) {
     if (deviceStatus == Status.connected ||
         deviceStatus == Status.devicefound) {
+      changeTextColour(Color(0xff03dac6));
       config.render(c, "Device Found!", textPosition);
     } else if (deviceStatus == Status.nobluetooth) {
       config.render(c, "Bluetooth is required for this Game!",
-          Position(10, game.screenSize.height - 50));
+          Position(10, game.screenSize.height - 60));
       config.render(c, "Please enable it!",
           textPosition);
     } else {
@@ -35,4 +36,9 @@ class BluetoothStatus {
   }
 
   void update(double t) {}
+
+  void changeTextColour(Color newColor){
+    this.config = TextConfig(
+        fontSize: 25, color: newColor, fontFamily: 'BebasNeue');
+  }
 }

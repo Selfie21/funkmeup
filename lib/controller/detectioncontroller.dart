@@ -9,23 +9,23 @@ class DetectionController {
   Queue<int> accelXQueue = Queue<int>();
   Queue<int> accelZQueue = Queue<int>();
   Queue<int> gyroYQueue = Queue<int>();
-  static const int VALUES_TO_TAKE_AVERAGE_OVER = 4;
+  static const int VALUES_TO_TAKE_AVERAGE_OVER = 3;
 
   DetectionController(this.game);
 
   bool update(double t, Moves move) {
     switch (move) {
       case Moves.slideleft:
-        return detectNegativeAxisMovement(getAverageFromQueue(accelZQueue), -2000);
+        return detectNegativeAxisMovement(getAverageFromQueue(accelZQueue), -1000);
         break;
       case Moves.slidefront:
-        return detectPostiveAxisMovement(getAverageFromQueue(accelZQueue), 2000);
+        return detectPostiveAxisMovement(getAverageFromQueue(accelZQueue), 1000);
         break;
       case Moves.slideright:
-        return detectPostiveAxisMovement(getAverageFromQueue(accelXQueue), 2000);
+        return detectPostiveAxisMovement(getAverageFromQueue(accelXQueue), 1000);
         break;
       case Moves.spin:
-        detectNegativeAxisMovement(getAverageFromQueue(gyroYQueue), -4000);
+        detectPostiveAxisMovement(getAverageFromQueue(gyroYQueue), 2500);
         break;
     }
     return false;
@@ -47,7 +47,7 @@ class DetectionController {
     int avgX = getAverageFromQueue(accelXQueue);
     int avgZ = getAverageFromQueue(accelZQueue);
     int avgGyro = getAverageFromQueue(gyroYQueue);
-    print("avgX: $avgX    $avgZ    $avgGyro");
+    print("Sensordata: $avgX    $avgZ    $avgGyro");
   }
 
   void insertToQueue(Queue<int> tmpQueue, int value){

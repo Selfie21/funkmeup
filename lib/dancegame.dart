@@ -133,6 +133,8 @@ class DanceGame extends Game with TapDetector {
       if(bluetoothController.getDeviceStatus() == Status.connected){
         Flame.audio.play('play.mp3');
         startbtn.onTapDown();
+      }else{
+        bluetoothStatus.changeTextColour(Color(0xffb00020));
       }
     }
 
