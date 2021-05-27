@@ -42,8 +42,11 @@ class IconSpawner {
   }
 
   void start() {
-    score = 0;
+    game.icons = [];
     currentMoveIndex = 0;
+    categoryMoveToCheck.clear();
+    timingMoveToCheck.clear();
+    score = 0;
     startTime = DateTime.now().millisecondsSinceEpoch;
     nextSpawnTime = startTime + timings[currentMoveIndex];
   }

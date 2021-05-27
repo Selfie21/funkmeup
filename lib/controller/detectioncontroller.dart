@@ -25,7 +25,7 @@ class DetectionController {
         return detectPostiveAxisMovement(getAverageFromQueue(accelXQueue), 1000);
         break;
       case Moves.spin:
-        detectPostiveAxisMovement(getAverageFromQueue(gyroYQueue), 2500);
+        return detectPostiveAxisMovement(getAverageFromQueue(gyroYQueue), 1500);
         break;
     }
     return false;
@@ -43,11 +43,6 @@ class DetectionController {
     insertToQueue(gyroYQueue, gyroY);
     insertToQueue(accelXQueue, accel[0]);
     insertToQueue(accelZQueue, accel[2]);
-
-    int avgX = getAverageFromQueue(accelXQueue);
-    int avgZ = getAverageFromQueue(accelZQueue);
-    int avgGyro = getAverageFromQueue(gyroYQueue);
-    print("Sensordata: $avgX    $avgZ    $avgGyro");
   }
 
   void insertToQueue(Queue<int> tmpQueue, int value){

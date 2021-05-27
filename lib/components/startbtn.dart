@@ -29,6 +29,5 @@ class StartButton {
     game.activeView = View.playing;
     game.playMainAudio();
     game.spawner.start();
-    game.score = 0;
   }
 }

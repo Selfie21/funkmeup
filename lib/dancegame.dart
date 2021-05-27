@@ -31,7 +31,6 @@ class DanceGame extends Game with TapDetector {
   Random rnd;
   IconSpawner spawner;
   Bar bar;
-  int score;
   AudioPlayer introAudio;
   AudioPlayer mainAudio;
 
@@ -104,21 +103,23 @@ class DanceGame extends Game with TapDetector {
 
   void render(Canvas canvas) {
     drawBackground(canvas);
-    icons.forEach((Icon icon) => icon.render(canvas));
     if (activeView == View.home)
       homeView.render(canvas);
     else if (activeView == View.help)
       helpView.render(canvas);
     else if (activeView == View.playing) {
+      icons.forEach((Icon icon) => icon.render(canvas));
       spawner.render(canvas);
       bar.render(canvas);
     }
   }
 
   void update(double t) {
-    if (activeView == View.playing) spawner.update(t);
-    icons.forEach((Icon icon) => icon.update(t));
-    icons.removeWhere((Icon icon) => icon.isOffScreen);
+    if (activeView == View.playing){
+      spawner.update(t);
+      icons.forEach((Icon icon) => icon.update(t));
+      icons.removeWhere((Icon icon) => icon.isOffScreen);
+    }
   }
 
   void drawBackground(Canvas canvas) {
@@ -135,6 +136,8 @@ class DanceGame extends Game with TapDetector {
         startbtn.onTapDown();
       }else{
         bluetoothStatus.changeTextColour(Color(0xffb00020));
+        Flame.audio.play('play.mp3');
+        startbtn.onTapDown();
       }
     }
 
