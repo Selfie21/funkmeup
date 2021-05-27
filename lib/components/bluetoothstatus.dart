@@ -28,8 +28,7 @@ class BluetoothStatus {
     } else if (deviceStatus == Status.nobluetooth) {
       config.render(c, "Bluetooth is required for this Game!",
           Position(10, game.screenSize.height - 60));
-      config.render(c, "Please enable it!",
-          textPosition);
+      config.render(c, "Please enable it!", textPosition);
     } else {
       config.render(c, "Searching for Device ...", textPosition);
     }
@@ -37,8 +36,8 @@ class BluetoothStatus {
 
   void update(double t) {}
 
-  void changeTextColour(Color newColor){
-    this.config = TextConfig(
-        fontSize: 25, color: newColor, fontFamily: 'BebasNeue');
+  void changeTextColour(Color newColor) {
+    this.config =
+        TextConfig(fontSize: 25, color: newColor, fontFamily: 'BebasNeue');
   }
 }

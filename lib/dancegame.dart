@@ -115,7 +115,7 @@ class DanceGame extends Game with TapDetector {
   }
 
   void update(double t) {
-    if (activeView == View.playing){
+    if (activeView == View.playing) {
       spawner.update(t);
       icons.forEach((Icon icon) => icon.update(t));
       icons.removeWhere((Icon icon) => icon.isOffScreen);
@@ -131,10 +131,10 @@ class DanceGame extends Game with TapDetector {
 
   void onTapDown(TapDownDetails d) {
     if (startbtn.rect.contains(d.globalPosition) && activeView == View.home) {
-      if(bluetoothController.getDeviceStatus() == Status.connected){
+      if (bluetoothController.getDeviceStatus() == Status.connected) {
         Flame.audio.play('play.mp3');
         startbtn.onTapDown();
-      }else{
+      } else {
         bluetoothStatus.changeTextColour(Color(0xffb00020));
         Flame.audio.play('play.mp3');
         startbtn.onTapDown();

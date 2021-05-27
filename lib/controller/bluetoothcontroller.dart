@@ -18,7 +18,6 @@ class BluetoothController {
   int gyroY = 0;
   static const double ALPHA = 0.8;
 
-
   BluetoothController(this.game) {
     this.detectionController = game.detectionController;
     Timer.periodic(Duration(seconds: 2), (timer) {
@@ -98,7 +97,7 @@ class BluetoothController {
     });
   }
 
-  Status getDeviceStatus(){
+  Status getDeviceStatus() {
     return _deviceStatus;
   }
 }
