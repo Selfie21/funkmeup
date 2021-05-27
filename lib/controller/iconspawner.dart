@@ -13,55 +13,9 @@ class IconSpawner {
   final DanceGame game;
   final TextConfig config = TextConfig(
       fontSize: 40, color: Color(0xff03dac6), fontFamily: 'BebasNeue');
-  final moves = [
-    0,
-    2,
-    0,
-    2,
-    1,
-    1,
-    3,
-    0,
-    0,
-    2,
-    2,
-    0,
-    2,
-    0,
-    2,
-    0,
-    3,
-    2,
-    3,
-    3,
-    3,
-    3,
-    2
-  ];
-  final timings = [
-    0,
-    2000,
-    3340,
-    2000,
-    4000,
-    1800,
-    1600,
-    1400,
-    1400,
-    1400,
-    1400,
-    6000,
-    1400,
-    1400,
-    1400,
-    4000,
-    2000,
-    2000,
-    2000,
-    7000,
-    4000,
-    99999
-  ];
+  final moves = [0,2,0,2,1,1,3,0,0,2,2,0,2,0,2,0,3,2,3,3,3,3,2];
+  final timings = [0,2000,3340,2000,4000,1800,1600,1400,1400,1400,1400,6000,
+    1400,1400,1400,4000,2000,2000,2000,7000,4000,99999];
   static const int PLAY_TIME = 60000;
   static const int TIMEDELAY_AFTER_CHECKING_MOVES = 4000;
   static const int TIMEDELAY_AFTER_GOODMOVE = 1200;
